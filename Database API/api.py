@@ -16,7 +16,7 @@ app = Flask(__name__)
 database = Database(**config["DatabaseCredentials"])
 
 
-@app.route("/")
+@app.post("/")
 def execute():
     token = request.headers.get("Token", None)
 
