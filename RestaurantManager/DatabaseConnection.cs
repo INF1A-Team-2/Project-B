@@ -30,9 +30,7 @@ class DatabaseConnection
         HttpResponseMessage res = _httpClient.PostAsync(_credentials.Adress, body).Result;
 
         string jsonResponse = res.Content.ReadAsStringAsync().Result;
-        
-        Console.WriteLine(jsonResponse);
-        
+
         return JsonConvert.DeserializeObject<List<List<object>>>(jsonResponse);
     }
 
