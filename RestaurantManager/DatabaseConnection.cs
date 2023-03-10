@@ -20,10 +20,8 @@ class DatabaseConnection
         _httpClient.DefaultRequestHeaders.Add("Token", _credentials.Token);
     }
 
-    public List<List<object>> Execute(string query, List<object>? values = null)
+    public List<List<object>> Execute(string query, params object[] values)
     {
-        values ??= new List<object>();
-
         StringContent body = new StringContent(
             JsonConvert.SerializeObject(new { Query = query, Values = values }),
             System.Text.Encoding.UTF8,
