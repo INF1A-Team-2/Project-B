@@ -1,3 +1,5 @@
+using System.Net;
+using System.Security.Authentication;
 using Newtonsoft.Json;
 
 namespace RestaurantManager;
@@ -29,6 +31,18 @@ class DatabaseConnection
         
         HttpResponseMessage res = _httpClient.PostAsync(_credentials.Adress, body).Result;
 
+        switch (res.StatusCode)
+        {
+            case HttpStatusCode.Unauthorized:
+                throw new Exception("The provided database token is invalid");
+            
+            case HttpStatusCode.BadRequest:
+                throw new Exception("No query was provided");
+            
+            case HttpStatusCode.InternalServerError:
+                throw new Exception("An internal database error occured, the query might be incorrect");
+        }
+        
         string jsonResponse = res.Content.ReadAsStringAsync().Result;
 
         return JsonConvert.DeserializeObject<List<List<object>>>(jsonResponse);
