@@ -123,15 +123,11 @@ public static class InputManager
         if (amount < 0)
             return;
         
-        int currentLineCursor = Console.CursorTop;
-        
         for (int i = 0; i < amount; i++)
         {
             Console.SetCursorPosition(0, Console.CursorTop - 1);
             ClearCurrentLine();
         }
-        
-        //Console.SetCursorPosition(0, currentLineCursor);
     }
     
     private static void ClearCurrentLine()
