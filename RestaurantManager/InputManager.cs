@@ -1,6 +1,6 @@
 namespace RestaurantManager;
 
-public static class InputManager
+static class InputManager
 {
     public static string GetString(string prefix = "", bool allowEmpty = true)
     {
