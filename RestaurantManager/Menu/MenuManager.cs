@@ -8,6 +8,8 @@ public static class MenuManager
     {
         List<List<object>> menus = Program.Database.Execute("SELECT * FROM menus");
 
-        return menus.Select(m => new Menu((int)(long)m[0], (string)m[1])).ToList();
+        return menus.Select(m => new Menu(
+            (int)(long)m[0], 
+            (string)m[1])).ToList();
     }
 }

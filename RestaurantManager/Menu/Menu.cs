@@ -24,6 +24,8 @@ public class Menu
             WHERE mcl.menu_id = %s
             """, ID);
         
-        return categories.Select(c => new MenuCategory((int)(long)c[0], (string)c[1])).ToList();
+        return categories.Select(c => new MenuCategory(
+            (int)(long)c[0], 
+            (string)c[1])).ToList();
     }
 }
