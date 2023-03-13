@@ -7,5 +7,12 @@ static class Program
     public static void Main(string[] args)
     {
         Console.OutputEncoding = System.Text.Encoding.UTF8;
+
+        List<Reservation> res = Reservation.GetAllReservations();
+
+        foreach (Reservation r in res)
+        {
+            Console.WriteLine(r);
+        }
     }
 }
