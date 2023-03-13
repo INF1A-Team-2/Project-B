@@ -1,4 +1,4 @@
-using RestaurantManager;
+namespace RestaurantManager;
 
 static class Program
 {
