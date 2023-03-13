@@ -30,6 +30,7 @@ class DatabaseConnection
             "application/json");
         
         HttpResponseMessage res = _httpClient.PostAsync(_credentials.Adress, body).Result;
+        string responseBody = res.Content.ReadAsStringAsync().Result;
 
         switch (res.StatusCode)
         {
@@ -40,12 +41,10 @@ class DatabaseConnection
                 throw new Exception("No query was provided");
             
             case HttpStatusCode.InternalServerError:
-                throw new Exception("An internal database error occured, the query might be incorrect");
+                throw new Exception($"An internal database error occured: {responseBody}");
         }
         
-        string jsonResponse = res.Content.ReadAsStringAsync().Result;
-
-        return JsonConvert.DeserializeObject<List<List<object>>>(jsonResponse);
+        return JsonConvert.DeserializeObject<List<List<object>>>(responseBody);
     }
 
     private DatabaseCredentials GetCredentialsFromJson(string fileName)
