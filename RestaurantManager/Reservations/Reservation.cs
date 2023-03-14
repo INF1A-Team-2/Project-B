@@ -8,21 +8,25 @@ class Reservation
     public DateTime Time;
     public int People;
     public MenuType MenuType;
+    public int Rounds;
     public int TableID;
     public string Code;
 
-    public Reservation(int id, DateTime dateTime, int people, MenuType menuType, int tableId, string code)
+    public Reservation(int id, DateTime dateTime, int people, MenuType menuType, int rounds, int tableId, string code)
     {
         this.ID = id;
         this.Time = dateTime;
         this.People = people;
         this.MenuType = menuType;
+        this.Rounds = rounds;
         this.TableID = tableId;
         this.Code = code;
     }
 
     public override string ToString() =>
-        $"ID: {ID}; Time: {Time}; People: {People}; MenuType: {MenuType}; TableID: {TableID}; Code: {Code}"; 
+        $"ID: {ID}; Time: {Time}; People: {People}; MenuType: {MenuType}; TableID: {TableID}; Code: {Code}";
+
+    public TimeSpan TotalTime() => Config.RoundTime * Rounds;
 
     private static Reservation Parse(List<object> data)
     {
@@ -32,7 +36,8 @@ class Reservation
             (int)(long)data[2],
             (MenuType)(int)(long)data[3],
             (int)(long)data[4],
-            (string)data[5]);
+            (int)(long)data[5],
+            (string)data[6]);
     }
 
     public static List<Reservation> GetAllReservations()

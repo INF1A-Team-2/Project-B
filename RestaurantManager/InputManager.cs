@@ -2,14 +2,14 @@ namespace RestaurantManager;
 
 static class InputManager
 {
-    public static string GetString(string prefix = "", bool allowEmpty = true)
+    public static string GetString(string prefix = "", Func<string, bool>? isValid = null, bool allowEmpty = true)
     {
         while (true)
         {
             Console.Write(prefix + " ");
             string input = Console.ReadLine() ?? "";
 
-            if (input.Length == 0 && !allowEmpty)
+            if ((input.Length == 0 && !allowEmpty) || (isValid != null && !isValid(input)))
             {
                 Console.WriteLine("Invalid input");
                 continue;
@@ -19,7 +19,7 @@ static class InputManager
         }
     }
     
-    public static int GetInt(string prefix = "")
+    public static int GetInt(string prefix = "", Func<int, bool>? isValid = null)
     {
         while (true)
         {
@@ -28,7 +28,7 @@ static class InputManager
             
             bool valid = int.TryParse(input, out int result);
 
-            if (!valid)
+            if (!valid || (isValid != null && !isValid(result)))
             {
                 Console.WriteLine("Invalid input");
                 continue;
@@ -38,7 +38,7 @@ static class InputManager
         }
     }
 
-    public static DateOnly GetDate(string prefix = "")
+    public static DateTime GetDate(string prefix = "")
     {
         while (true)
         {
@@ -49,10 +49,10 @@ static class InputManager
 
             bool valid = parts.Length == 3;
             
-            DateOnly date = new DateOnly();
+            DateTime date = new DateTime();
             try
             {
-                date = new DateOnly(
+                date = new DateTime(
                     int.Parse(parts[0]),
                     int.Parse(parts[1]),
                     int.Parse(parts[2]));
